@@ -70,6 +70,19 @@ class User:
             return response['basicPresence']
         else:
             return response
+        
+    def get_presence_batch(self, account_ids):
+        """account_ids size must be less than or equal to 100"""
+        params = {
+            'type': 'primary',
+            'accountIds': ','.join(account_ids)
+        }
+        response = self.request_builder.get(url='{}/basicPresences'.format(User.base_uri),
+                                            params=params)
+        if 'basicPresences' in response.keys():
+            return response['basicPresences']
+        else:
+            return response
 
     def friendship(self):
         """
